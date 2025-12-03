@@ -1,9 +1,9 @@
 {
-	"name": "BasicCleanupPipeline",
+	"name": "pl_CleanAll",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CopyData",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -44,7 +44,8 @@
 									"ordinal": 1
 								},
 								"sink": {
-									"name": "Account Number",
+									"name": "Column1",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -54,7 +55,8 @@
 									"ordinal": 2
 								},
 								"sink": {
-									"name": "Name",
+									"name": "Column2",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -64,7 +66,8 @@
 									"ordinal": 3
 								},
 								"sink": {
-									"name": "Surname",
+									"name": "Column3",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -74,7 +77,8 @@
 									"ordinal": 4
 								},
 								"sink": {
-									"name": "Id Number",
+									"name": "Column4",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -84,7 +88,8 @@
 									"ordinal": 5
 								},
 								"sink": {
-									"name": "Cell",
+									"name": "Column5",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -94,7 +99,8 @@
 									"ordinal": 6
 								},
 								"sink": {
-									"name": "Home Tel",
+									"name": "Column6",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -104,7 +110,8 @@
 									"ordinal": 7
 								},
 								"sink": {
-									"name": "Work Tel",
+									"name": "Column7",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -114,7 +121,8 @@
 									"ordinal": 8
 								},
 								"sink": {
-									"name": "Adress 1",
+									"name": "Column8",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -124,7 +132,41 @@
 									"ordinal": 9
 								},
 								"sink": {
-									"name": "Balance",
+									"name": "Column9",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"ordinal": 10
+								},
+								"sink": {
+									"name": "Column10",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"ordinal": 11
+								},
+								"sink": {
+									"name": "Column11",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"ordinal": 12
+								},
+								"sink": {
+									"name": "Column12",
+									"type": "String",
 									"physicalType": "String"
 								}
 							}
@@ -138,16 +180,47 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_BasicCleanup_Excel",
+						"referenceName": "CleanAll",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "BasicCleanup_staging_csv",
+						"referenceName": "Cleaned",
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "DataFlow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "CopyData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_CleanAll",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": [],
