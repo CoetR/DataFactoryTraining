@@ -12,7 +12,15 @@
 					"name": "Source"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "df_Cleaned_Output",
+						"type": "DatasetReference"
+					},
+					"name": "Sink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "RenameHeaders"
@@ -256,7 +264,11 @@
 				"          Full_Balance = first(Full_Balance),",
 				"          Asset_Description = first(Asset_Description)) ~> RemoveDuplicateEntries",
 				"RemoveUnusedColumns filter(!isNull( toInteger(Account_No) )\r",
-				") ~> RemoveHeadersAsRow"
+				") ~> RemoveHeadersAsRow",
+				"RemoveDuplicateEntries sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Sink"
 			]
 		}
 	}
