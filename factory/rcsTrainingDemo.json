@@ -1,0 +1,9 @@
+{
+	"name": "rcsTrainingDemo",
+	"location": "southafricanorth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ba268cb6-feb5-4742-8eab-6052ac54a485",
+		"tenantId": "d8b30049-034a-4ddb-a053-de43115c048a"
+	}
+}
